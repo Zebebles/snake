@@ -1,8 +1,12 @@
 import { Map } from "./map/Map";
 import { Direction, Snake } from "./snake/Snake";
 
-const MAP_HEIGHT = parseInt(process.env.NEXT_PUBLIC_GAME_MAP_HEIGHT ?? "0");
-const MAP_WIDTH = parseInt(process.env.NEXT_PUBLIC_GAME_MAP_WIDTH ?? "0");
+export const MAP_HEIGHT = parseInt(
+  process.env.NEXT_PUBLIC_GAME_MAP_HEIGHT ?? "0"
+);
+export const MAP_WIDTH = parseInt(
+  process.env.NEXT_PUBLIC_GAME_MAP_WIDTH ?? "0"
+);
 
 export class Game {
   private readonly _map: Map;

@@ -9,8 +9,8 @@ export const styles: StylesList = {
     alignItems: "center",
     height: size,
     width: size,
-    backgroundColor: "#6fad78",
-    border: `1px solid #b9edc1`,
+    backgroundColor: "#6f886f",
+    border: `1px solid rgba(185, 237, 193, .2)`,
 
     "& > img:not(.snakePart)": {
       width: "40px",
@@ -18,7 +18,7 @@ export const styles: StylesList = {
     },
 
     "& > img.snakePart": {
-      height: "calc(100% + 2px)",
+      height: "calc(100% + 4px)",
     },
   },
 };

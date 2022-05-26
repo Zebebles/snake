@@ -1,5 +1,7 @@
 import { StylesList } from "../../../mui/types";
-const mapSize = `${15 * 50 + 12}px`;
+import { MAP_HEIGHT } from "../../../game/Game";
+
+const mapSize = `${MAP_HEIGHT * 50 + 16}px`;
 
 export const styles: StylesList = {
   gameMapWrapper: {
@@ -14,7 +16,7 @@ export const styles: StylesList = {
     flexDirection: "column",
     height: mapSize,
     width: mapSize,
-    border: "6px solid white",
-    borderRadius: "6px",
+    border: ({ palette }) => `8px solid ${palette.text.primary}`,
+    borderRadius: "8px",
   },
 };
