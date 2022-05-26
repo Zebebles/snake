@@ -6,7 +6,7 @@ export const styles: StylesList = {
   },
 
   header: {
-    flexBasis: "15%",
+    flexBasis: "10%",
     padding: "5px 10px",
     borderBottom: ({ palette }) => `1px solid ${palette.divider}`,
   },
