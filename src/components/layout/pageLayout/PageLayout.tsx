@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import { TitleBar } from "../titleBar/TitleBar";
 import { PageFooter } from "../pageFooter/PageFooter";
@@ -6,13 +6,17 @@ import { styles } from "./PageLayout.styles";
 
 export interface PageLayoutProps {
   children: JSX.Element;
+  title: string;
 }
 
-export const PageLayout: NextPage<PageLayoutProps> = ({ children }) => {
+export const PageLayout = ({
+  children,
+  title,
+}: PageLayoutProps): JSX.Element => {
   return (
     <Stack sx={styles.container}>
       <Box sx={styles.header}>
-        <TitleBar title="Snake" />
+        <TitleBar title={title} />
       </Box>
       <Box sx={styles.content}>
         <Container sx={styles.contentContainer}>{children}</Container>
