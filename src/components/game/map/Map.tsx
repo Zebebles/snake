@@ -7,20 +7,13 @@ import { styles } from "./Map.styles";
 export interface MapProps {}
 
 export const Map = (): JSX.Element => {
-  const { game } = useGameContext();
-  const { tiles } = game.map;
+  const { map } = useGameContext();
 
   return (
     <Box sx={styles.gameMapWrapper}>
       <Grid container sx={styles.gameMap}>
-        {tiles.map((tileRow, i) => {
-          return (
-            <Grid item xs={12} key={i}>
-              {tileRow.map((tile, j) => {
-                return <Tile gameTile={tile} key={`row ${i} tile ${j}`} />;
-              })}
-            </Grid>
-          );
+        {map?.tiles.map((tile, i) => {
+          return <Tile gameTile={tile} key={i} />;
         })}
       </Grid>
     </Box>

@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/mui/theme";
 import createEmotionCache from "../src/mui/createEmotionCache";
+import { GameContextProvider } from "../src/components/game/useGame/useGame";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -23,7 +24,9 @@ export default function MyApp(props: MyAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <GameContextProvider>
+          <Component {...pageProps} />
+        </GameContextProvider>
       </ThemeProvider>
     </CacheProvider>
   );

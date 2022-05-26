@@ -1,4 +1,10 @@
 import { Tile } from "../tile/Tile";
+export const MAP_HEIGHT = parseInt(
+  process.env.NEXT_PUBLIC_GAME_MAP_HEIGHT ?? "0"
+);
+export const MAP_WIDTH = parseInt(
+  process.env.NEXT_PUBLIC_GAME_MAP_WIDTH ?? "0"
+);
 
 export interface Position {
   x: number;
@@ -8,33 +14,32 @@ export interface Position {
 export class Map {
   private readonly _height: number;
   private readonly _width: number;
-  private _tiles: Tile[][] = [[]];
+  public tiles: Tile[] = [];
 
-  constructor({ height, width }: { height: number; width: number }) {
-    this._height = height;
-    this._width = width;
+  constructor() {
+    this._height = MAP_HEIGHT;
+    this._width = MAP_WIDTH;
     this._generateTiles();
     this.placeApple();
   }
 
   private _generateTiles() {
-    const tiles: Tile[][] = [];
+    const tiles: Tile[] = [];
 
     for (let y = 0; y < this._height; y++) {
-      tiles.push([]);
       for (let x = 0; x < this._width; x++) {
-        tiles[y].push(new Tile({ x, y }));
+        tiles.push(new Tile({ x, y }));
       }
     }
-    this._tiles = tiles;
+    this.tiles = tiles;
   }
 
   public placeApple() {
-    let appleTile: Tile;
+    let appleTile = this._randomTile();
 
-    do {
+    while (!appleTile || !appleTile.isEmpty) {
       appleTile = this._randomTile();
-    } while (!appleTile.isEmpty);
+    }
 
     appleTile.hasApple = true;
   }
@@ -42,14 +47,10 @@ export class Map {
   private _randomTile() {
     let x = Math.floor(Math.random() * 15);
     let y = Math.floor(Math.random() * 15);
-    return this._tiles[y][x];
+    return this.getTile({ x, y });
   }
 
-  public get tiles() {
-    return this._tiles;
-  }
-
-  public getTile(position: Position) {
-    return this._tiles[position.y][position.x];
+  public getTile(position: Position): Tile | undefined {
+    return this.tiles.find((tile) => tile.areYou(position));
   }
 }

@@ -1,5 +1,5 @@
 import { StylesList } from "../../../mui/types";
-import { MAP_HEIGHT } from "../../../game/Game";
+import { MAP_HEIGHT } from "../../../game/map/Map";
 
 const mapSize = `${MAP_HEIGHT * 50 + 16}px`;
 
