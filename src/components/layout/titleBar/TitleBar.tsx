@@ -1,5 +1,6 @@
 import { NextPage } from "next";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { styles } from "./TitleBar.styles";
 
 export interface TitleBarProps {
   title: string;
@@ -7,8 +8,8 @@ export interface TitleBarProps {
 
 export const TitleBar: NextPage<TitleBarProps> = ({ title }) => {
   return (
-    <>
-      <Typography variant="h3">{title}</Typography>
-    </>
+    <Box sx={styles.container}>
+      <Typography variant="h2">{title}</Typography>
+    </Box>
   );
 };
