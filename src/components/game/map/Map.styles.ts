@@ -3,7 +3,8 @@ import { MAP_HEIGHT } from "../../../game/map/Map";
 import { TILE_SIZE } from "../tile/Tile.styles";
 import { red } from "@mui/material/colors";
 
-const mapSize = MAP_HEIGHT * TILE_SIZE;
+const borderSize = 8;
+const mapSize = MAP_HEIGHT * TILE_SIZE + borderSize * 2;
 
 export const styles: StylesList = {
   gameMapWrapper: {
@@ -32,5 +33,6 @@ export const styles: StylesList = {
     width: mapSize,
     borderRadius: "8px",
     marginBottom: "15px",
+    border: ({ palette }) => `${borderSize}px solid ${palette.text.primary}`,
   },
 };

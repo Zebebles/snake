@@ -6,12 +6,12 @@ import { Backdrop } from "@mui/material";
 import { GameOver } from "../src/components/gameOver/GameOver";
 
 const Home: NextPage<{ title: string }> = ({ title }) => {
-  const { isOver } = useGameContext();
+  const { isOver, hasStarted } = useGameContext();
 
   return (
     <>
-      <Backdrop open={isOver}>
-        <GameOver />
+      <Backdrop open={isOver || !hasStarted}>
+        <GameOver title={title} />
       </Backdrop>
       <PageLayout title={title}>
         <Map />
@@ -21,7 +21,7 @@ const Home: NextPage<{ title: string }> = ({ title }) => {
 };
 
 export const getStaticProps = async () => {
-  return { props: { title: "Snek" } };
+  return { props: { title: "Le Snek" } };
 };
 
 export default Home;

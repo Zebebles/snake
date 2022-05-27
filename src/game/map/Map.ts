@@ -34,21 +34,26 @@ export class Map {
   }
 
   public randomTile() {
-    let x = Math.floor(Math.random() * MAP_WIDTH);
-    let y = Math.floor(Math.random() * MAP_HEIGHT);
-    return this.getTile({ x, y });
+    const randomIndex = (): number => {
+      const min = 1;
+      const max = MAP_HEIGHT - 2;
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    return this.getTile({ x: randomIndex(), y: randomIndex() });
   }
 
   public isOutOfBounds(position: Position) {
     return (
-      position.x <= 0 ||
-      position.x > MAP_WIDTH - 2 ||
-      position.y <= 0 ||
-      position.y > MAP_HEIGHT - 2
+      position.x < 0 ||
+      position.x >= MAP_WIDTH ||
+      position.y < 0 ||
+      position.y >= MAP_HEIGHT
     );
   }
 
   public getTile(position: Position): Tile | undefined {
-    return this.tiles.find((tile) => tile.areYou(position));
+    const index = position.x * position.y;
+    return this.tiles[index];
   }
 }

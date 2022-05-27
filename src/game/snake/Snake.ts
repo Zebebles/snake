@@ -97,14 +97,22 @@ export class Snake {
   public move() {
     if (this.isDead) return;
 
-    this.head.moveTail();
-
-    this.head = new SnakeSection({
+    const newHead = new SnakeSection({
       entryDirection: this.head.exitDirection,
       exitDirection: this.direction,
       tilePosition: this.nextPosition,
       isHead: true,
     });
+
+    if (
+      this._map.isOutOfBounds(newHead.tilePosition) ||
+      this.willIntersect(newHead.tilePosition)
+    )
+      return (this.isDead = true);
+
+    this.head.moveTail();
+
+    this.head = newHead;
   }
 }
 

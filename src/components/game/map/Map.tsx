@@ -26,8 +26,6 @@ export const Map = (): JSX.Element => {
               key={i}
               hasApple={hasApple}
               hasSnake={Boolean(snakeSection)}
-              isWall={tile.isWall}
-              border={tile.border}
               snakeImgSrc={snakeSection?.imgSrc}
             />
           );
