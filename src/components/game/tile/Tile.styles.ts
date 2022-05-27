@@ -10,7 +10,7 @@ export const styles: StylesList = {
     height: TILE_SIZE,
     width: TILE_SIZE,
     backgroundColor: "#6f886f",
-    border: `1px solid rgba(185, 237, 193, .2)`,
+    border: `2px solid rgba(185, 237, 193, .08)`,
 
     "& > img:not(.snakePart)": {
       width: TILE_SIZE - 10,
