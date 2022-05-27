@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import { styles } from "./Tile.styles";
 import { useGameContext } from "../useGame/useGame";
@@ -9,22 +9,19 @@ export interface TileProps {
 }
 
 export const Tile = ({ gameTile }: TileProps): JSX.Element => {
-  const { snake } = useGameContext();
-  const [snakeTile, setSnakeTile] = useState<GameTile>();
+  const { snake: snakeContext } = useGameContext();
+  const { snake } = snakeContext;
 
-  useEffect(() => {
-    setSnakeTile(snake.snake.getTile(gameTile.position));
-  }, [snake.tick]);
-
+  const snakeSection = snake.findSection(gameTile.position);
   return (
     <Box sx={styles.tileContainer}>
       {gameTile.hasApple && <img src="/img/apple.png" alt="apple.png" />}
 
       <img
-        src={snakeTile?.snakeImgSrc}
+        src={snakeSection?.imgSrc}
         alt="snake part"
         className="snakePart"
-        style={{ display: snakeTile?.snakeImgSrc ? "" : "none" }}
+        style={{ display: snakeSection?.imgSrc ? "" : "none" }}
       />
     </Box>
   );

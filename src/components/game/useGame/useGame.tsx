@@ -47,13 +47,6 @@ export const GameContextProvider = ({
     }
   }, [snake.tick]);
 
-  useEffect(() => {
-    if (map.getTile(snake.snake.head.position)?.hasApple) {
-      snake.snake.eatApple();
-      map.placeApple();
-    }
-  }, [snake.tick]);
-
   return (
     <GameContext.Provider value={{ map, tick, snake, isOver, restart }}>
       {children}

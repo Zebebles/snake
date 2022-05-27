@@ -14,6 +14,7 @@ export interface Position {
 export class Map {
   private readonly _height: number;
   private readonly _width: number;
+  public appleTile: Tile | undefined;
   public tiles: Tile[] = [];
 
   constructor() {
@@ -42,6 +43,7 @@ export class Map {
     }
 
     appleTile.hasApple = true;
+    this.appleTile = appleTile;
   }
 
   private _randomTile() {
