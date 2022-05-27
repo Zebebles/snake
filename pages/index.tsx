@@ -6,11 +6,11 @@ import { Backdrop } from "@mui/material";
 import { GameOver } from "../src/components/gameOver/GameOver";
 
 const Home: NextPage<{ title: string }> = ({ title }) => {
-  const { isOver } = useGameContext();
+  const { isOver, hasStarted } = useGameContext();
 
   return (
     <>
-      <Backdrop open={isOver}>
+      <Backdrop open={isOver || !hasStarted}>
         <GameOver />
       </Backdrop>
       <PageLayout title={title}>

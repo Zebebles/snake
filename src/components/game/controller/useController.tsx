@@ -37,19 +37,20 @@ export const useController = ({ snakeContext, game }: useControllerProps) => {
 
   useEffect(() => {
     const controlListener = (event: KeyboardEvent) => {
-      if (!game.isOver) {
-        switch (event.key) {
-          case "ArrowUp":
-            return addMove(() => snake.changeDirection(Direction.UP));
-          case "ArrowRight":
-            return addMove(() => snake.changeDirection(Direction.RIGHT));
-          case "ArrowDown":
-            return addMove(() => snake.changeDirection(Direction.DOWN));
-          case "ArrowLeft":
-            return addMove(() => snake.changeDirection(Direction.LEFT));
-        }
-      } else {
-        if (event.key === "Enter") return game.restart();
+      if (event.key === "Enter")
+        return game.hasStarted ? game.restart() : game.setHasStarted(true);
+
+      if (game.isOver) return;
+
+      switch (event.key) {
+        case "ArrowUp":
+          return addMove(() => snake.changeDirection(Direction.UP));
+        case "ArrowRight":
+          return addMove(() => snake.changeDirection(Direction.RIGHT));
+        case "ArrowDown":
+          return addMove(() => snake.changeDirection(Direction.DOWN));
+        case "ArrowLeft":
+          return addMove(() => snake.changeDirection(Direction.LEFT));
       }
     };
 
