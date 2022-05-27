@@ -6,7 +6,7 @@ import { useSnake } from "../snake/useSnake";
 export type useController = {};
 
 export interface useControllerProps {
-  game: Omit<GameContextType, "snake">;
+  game: Omit<GameContextType, "snake" | "score">;
   snakeContext: useSnake;
 }
 

@@ -46,9 +46,18 @@ export class Map {
     this.appleTile = appleTile;
   }
 
+  public isOutOfBounds(position: Position) {
+    return (
+      position.x < 0 ||
+      position.x > MAP_WIDTH ||
+      position.y < 0 ||
+      position.y > MAP_HEIGHT
+    );
+  }
+
   private _randomTile() {
-    let x = Math.floor(Math.random() * 15);
-    let y = Math.floor(Math.random() * 15);
+    let x = Math.floor(Math.random() * MAP_WIDTH);
+    let y = Math.floor(Math.random() * MAP_HEIGHT);
     return this.getTile({ x, y });
   }
 

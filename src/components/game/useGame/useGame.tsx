@@ -6,6 +6,7 @@ import { Snake } from "../../../game/snake/Snake";
 export type GameContextType = {
   map: Map;
   snake: useSnake;
+  score: number;
   tick: number;
   isOver: boolean;
   restart: () => void;
@@ -47,8 +48,10 @@ export const GameContextProvider = ({
     }
   }, [snake.tick]);
 
+  const score = (snake.snake.length - 5) * 5;
+
   return (
-    <GameContext.Provider value={{ map, tick, snake, isOver, restart }}>
+    <GameContext.Provider value={{ map, tick, snake, score, isOver, restart }}>
       {children}
     </GameContext.Provider>
   );

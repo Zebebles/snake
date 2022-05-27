@@ -6,10 +6,10 @@ const START_ROW_INDEX = 2;
 export class Snake {
   private _map: Map;
   private _headSection: SnakeSection;
+  public isDead: boolean;
   public length: number;
   public movePerTicks: number;
   public direction: Direction;
-  public isDead: boolean;
 
   constructor(map: Map) {
     this._map = map;
@@ -73,10 +73,6 @@ export class Snake {
     }
   }
 
-  public get position(): Position {
-    return this.head.tilePosition;
-  }
-
   public get nextPosition(): Position {
     let newHeadX = this.head.tilePosition.x;
     let newHeadY = this.head.tilePosition.y;
@@ -96,17 +92,27 @@ export class Snake {
     return { x: newHeadX, y: newHeadY };
   }
 
+  public willIntersect(position: Position): boolean {
+    return Boolean(this.head.find(position));
+  }
+
   public move() {
     if (this.isDead) return;
 
     this.head.moveTail();
 
-    this.head = new SnakeSection({
+    const newHead = new SnakeSection({
       entryDirection: this.head.exitDirection,
       exitDirection: this.direction,
       tilePosition: this.nextPosition,
       isHead: true,
     });
+
+    this.isDead =
+      this.willIntersect(newHead.tilePosition) ||
+      this._map.isOutOfBounds(newHead.tilePosition);
+
+    this.head = newHead;
   }
 }
 

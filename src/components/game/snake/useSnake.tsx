@@ -10,7 +10,8 @@ export type useSnake = {
   setTick: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export interface useSnakeProps extends Omit<GameContextType, "snake"> {}
+export interface useSnakeProps
+  extends Omit<GameContextType, "snake" | "score"> {}
 
 export const useSnake = (game: useSnakeProps) => {
   const [snake, setSnake] = useState<Snake>(new Snake(game.map));
