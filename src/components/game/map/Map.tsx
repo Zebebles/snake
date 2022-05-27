@@ -17,22 +17,19 @@ export const Map = (): JSX.Element => {
         </Typography>
       </Box>
       <Grid container sx={styles.gameMap}>
-        {map?.tiles.map((tile, i) => {
+        {map.tiles.map((tile, i) => {
           const hasApple = tile.areYou(applePosition);
           const snakeSection = snake.snake.findSection(tile.position);
 
-          return React.useMemo(
-            () => (
-              <Tile
-                key={i}
-                hasApple={hasApple}
-                hasSnake={Boolean(snakeSection)}
-                isWall={tile.isWall}
-                border={tile.border}
-                snakeImgSrc={snakeSection?.imgSrc}
-              />
-            ),
-            [hasApple, snakeSection?.imgSrc, snakeSection]
+          return (
+            <Tile
+              key={i}
+              hasApple={hasApple}
+              hasSnake={Boolean(snakeSection)}
+              isWall={tile.isWall}
+              border={tile.border}
+              snakeImgSrc={snakeSection?.imgSrc}
+            />
           );
         })}
       </Grid>

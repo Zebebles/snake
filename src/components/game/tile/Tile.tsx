@@ -18,24 +18,27 @@ export const Tile = ({
   snakeImgSrc,
   border,
 }: TileProps): JSX.Element => {
-  return (
-    <Box
-      sx={styles.tileContainer}
-      className={isWall ? "wall" : ""}
-      style={border ?? {}}
-    >
-      <img
-        src="/img/apple.png"
-        alt="apple.png"
-        style={{ display: hasApple ? "" : "none" }}
-      />
+  return React.useMemo(
+    () => (
+      <Box
+        sx={styles.tileContainer}
+        className={isWall ? "wall" : ""}
+        style={border}
+      >
+        <img
+          src="/img/apple.png"
+          alt="apple.png"
+          style={{ display: hasApple ? "" : "none" }}
+        />
 
-      <img
-        src={snakeImgSrc}
-        alt="snake part"
-        className="snakePart"
-        style={{ display: hasSnake ? "" : "none" }}
-      />
-    </Box>
+        <img
+          src={snakeImgSrc}
+          alt="snake part"
+          className="snakePart"
+          style={{ display: hasSnake ? "" : "none" }}
+        />
+      </Box>
+    ),
+    [hasApple, hasSnake, snakeImgSrc]
   );
 };
