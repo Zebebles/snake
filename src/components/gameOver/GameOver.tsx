@@ -13,7 +13,7 @@ export const GameOver = (props: GameOverProps): JSX.Element => {
         </Grid>
         <Grid xs={12}>
           <Typography variant="h5">
-            Press <code>'ENTER'</code> to play again
+            Press <code>&apos;ENTER&apos;</code> to play again
           </Typography>
         </Grid>
       </Grid>
