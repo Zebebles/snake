@@ -5,7 +5,7 @@ import { red } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     text: {
-      primary: "#EFEFEF",
+      primary: "#CFCFCF",
     },
     error: {
       main: red.A400,
@@ -13,7 +13,7 @@ const theme = createTheme({
     background: {
       default: "#464F46",
     },
-    divider: "#2F2F2F",
+    divider: "#666F66",
   },
 });
 

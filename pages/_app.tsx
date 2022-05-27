@@ -6,8 +6,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/mui/theme";
 import createEmotionCache from "../src/mui/createEmotionCache";
+import { GameContextProvider } from "../src/components/game/useGame/useGame";
 
-// Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
@@ -23,9 +23,10 @@ export default function MyApp(props: MyAppProps) {
         <title>Snek</title>
       </Head>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <GameContextProvider>
+          <Component {...pageProps} />
+        </GameContextProvider>
       </ThemeProvider>
     </CacheProvider>
   );
