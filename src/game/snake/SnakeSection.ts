@@ -92,7 +92,8 @@ export class SnakeSection {
     );
   }
 
-  public find(tilePosition: Position): SnakeSection | undefined {
+  public find(tilePosition?: Position): SnakeSection | undefined {
+    if (!tilePosition) return;
     if (this.isAtPosition(tilePosition)) {
       return this;
     }

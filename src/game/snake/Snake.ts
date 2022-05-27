@@ -15,7 +15,7 @@ export class Snake {
     this._map = map;
     this.direction = Direction.RIGHT;
     this.length = 5;
-    this.movePerTicks = 4;
+    this.movePerTicks = 30;
     this.isDead = false;
 
     const headPosition = { x: START_ROW_INDEX, y: START_COL_INDEX };
@@ -43,16 +43,14 @@ export class Snake {
     this._headSection = newHead;
   }
 
-  public findSection(position: Position): SnakeSection | undefined {
+  public findSection(position?: Position): SnakeSection | undefined {
+    if (!position) return;
     return this.head.find(position);
   }
 
   public eatApple() {
-    const mapTile = this._map.getTile(this.head.tilePosition);
-    if (!mapTile) return;
-    mapTile.hasApple = false;
     this.grow();
-    if (this.length % 4 === 0 && this.movePerTicks > 1) {
+    if (this.length % 3 === 0 && this.movePerTicks > 10) {
       this.speedUp();
     }
   }
@@ -93,7 +91,7 @@ export class Snake {
   }
 
   public willIntersect(position: Position): boolean {
-    return Boolean(this.head.find(position));
+    return Boolean(this.head.next?.find(position));
   }
 
   public move() {
@@ -101,18 +99,12 @@ export class Snake {
 
     this.head.moveTail();
 
-    const newHead = new SnakeSection({
+    this.head = new SnakeSection({
       entryDirection: this.head.exitDirection,
       exitDirection: this.direction,
       tilePosition: this.nextPosition,
       isHead: true,
     });
-
-    this.isDead =
-      this.willIntersect(newHead.tilePosition) ||
-      this._map.isOutOfBounds(newHead.tilePosition);
-
-    this.head = newHead;
   }
 }
 

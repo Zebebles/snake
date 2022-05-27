@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Map } from "../../../game/map/Map";
+import { Map, Position } from "../../../game/map/Map";
 import { useSnake } from "../snake/useSnake";
 import { Snake } from "../../../game/snake/Snake";
+import { Tile } from "../../../game/tile/Tile";
+import useInterval from "use-interval";
 
 export type GameContextType = {
   map: Map;
   snake: useSnake;
+  applePosition: Position | undefined;
+  placeApple: () => void;
   score: number;
   tick: number;
   isOver: boolean;
+  setIsOver: React.Dispatch<React.SetStateAction<boolean>>;
   restart: () => void;
 };
 
@@ -21,6 +26,7 @@ export const GameContextProvider = ({
 }) => {
   const [map, setMap] = useState<Map>(new Map());
   const [tick, setTick] = useState(1);
+  const [applePosition, setApplePosition] = useState<Position>();
   const [isOver, setIsOver] = useState(false);
 
   const restart = () => {
@@ -32,26 +38,59 @@ export const GameContextProvider = ({
     setIsOver(false);
   };
 
-  const snake = useSnake({ map, tick, isOver, restart });
+  const placeApple = () => {
+    const isTileEmpty = (tile?: Tile): boolean => {
+      if (!tile) return false;
+      return !tile.isWall && !Boolean(snake.snake.findSection(tile.position));
+    };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTick(tick + 1);
-    }, 20);
+    let nextAppleTile: Tile | undefined = map.randomTile();
 
-    return () => clearInterval(intervalId);
-  }, [tick]);
-
-  useEffect(() => {
-    if (snake.snake.isDead) {
-      return setIsOver(true);
+    while (!nextAppleTile || !isTileEmpty(nextAppleTile)) {
+      nextAppleTile = map.randomTile();
     }
-  }, [snake.tick]);
+
+    setApplePosition(nextAppleTile.position);
+  };
+
+  useEffect(() => {
+    if (!isOver) {
+      placeApple();
+    }
+  }, [isOver]);
+
+  const snake = useSnake({
+    map,
+    tick,
+    applePosition,
+    placeApple,
+    isOver,
+    setIsOver,
+    restart,
+  });
+
+  useInterval(() => {
+    if (!isOver) {
+      setTick(tick + 1);
+    }
+  }, 5);
 
   const score = (snake.snake.length - 5) * 5;
 
   return (
-    <GameContext.Provider value={{ map, tick, snake, score, isOver, restart }}>
+    <GameContext.Provider
+      value={{
+        map,
+        tick,
+        snake,
+        score,
+        applePosition,
+        placeApple,
+        isOver,
+        setIsOver,
+        restart,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

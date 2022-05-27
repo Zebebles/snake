@@ -3,7 +3,7 @@ import { MAP_HEIGHT } from "../../../game/map/Map";
 import { TILE_SIZE } from "../tile/Tile.styles";
 import { red } from "@mui/material/colors";
 
-const mapSize = `${MAP_HEIGHT * TILE_SIZE + 16}px`;
+const mapSize = MAP_HEIGHT * TILE_SIZE;
 
 export const styles: StylesList = {
   gameMapWrapper: {
@@ -30,7 +30,7 @@ export const styles: StylesList = {
     flexDirection: "column",
     height: mapSize,
     width: mapSize,
-    border: ({ palette }) => `8px solid ${palette.text.primary}`,
     borderRadius: "8px",
+    marginBottom: "15px",
   },
 };

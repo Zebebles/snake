@@ -14,14 +14,12 @@ export interface Position {
 export class Map {
   private readonly _height: number;
   private readonly _width: number;
-  public appleTile: Tile | undefined;
   public tiles: Tile[] = [];
 
   constructor() {
     this._height = MAP_HEIGHT;
     this._width = MAP_WIDTH;
     this._generateTiles();
-    this.placeApple();
   }
 
   private _generateTiles() {
@@ -35,30 +33,19 @@ export class Map {
     this.tiles = tiles;
   }
 
-  public placeApple() {
-    let appleTile = this._randomTile();
-
-    while (!appleTile || !appleTile.isEmpty) {
-      appleTile = this._randomTile();
-    }
-
-    appleTile.hasApple = true;
-    this.appleTile = appleTile;
+  public randomTile() {
+    let x = Math.floor(Math.random() * MAP_WIDTH);
+    let y = Math.floor(Math.random() * MAP_HEIGHT);
+    return this.getTile({ x, y });
   }
 
   public isOutOfBounds(position: Position) {
     return (
-      position.x < 0 ||
-      position.x > MAP_WIDTH ||
-      position.y < 0 ||
-      position.y > MAP_HEIGHT
+      position.x <= 0 ||
+      position.x > MAP_WIDTH - 2 ||
+      position.y <= 0 ||
+      position.y > MAP_HEIGHT - 2
     );
-  }
-
-  private _randomTile() {
-    let x = Math.floor(Math.random() * MAP_WIDTH);
-    let y = Math.floor(Math.random() * MAP_HEIGHT);
-    return this.getTile({ x, y });
   }
 
   public getTile(position: Position): Tile | undefined {

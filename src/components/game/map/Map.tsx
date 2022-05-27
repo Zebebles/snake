@@ -7,7 +7,7 @@ import { styles } from "./Map.styles";
 export interface MapProps {}
 
 export const Map = (): JSX.Element => {
-  const { map, score } = useGameContext();
+  const { map, score, applePosition, snake } = useGameContext();
 
   return (
     <Box sx={styles.gameMapWrapper}>
@@ -18,7 +18,22 @@ export const Map = (): JSX.Element => {
       </Box>
       <Grid container sx={styles.gameMap}>
         {map?.tiles.map((tile, i) => {
-          return <Tile gameTile={tile} key={i} />;
+          const hasApple = tile.areYou(applePosition);
+          const snakeSection = snake.snake.findSection(tile.position);
+
+          return React.useMemo(
+            () => (
+              <Tile
+                key={i}
+                hasApple={hasApple}
+                hasSnake={Boolean(snakeSection)}
+                isWall={tile.isWall}
+                border={tile.border}
+                snakeImgSrc={snakeSection?.imgSrc}
+              />
+            ),
+            [hasApple, snakeSection?.imgSrc, snakeSection]
+          );
         })}
       </Grid>
     </Box>

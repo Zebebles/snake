@@ -15,16 +15,24 @@ type GameMove = () => void;
 export const useController = ({ snakeContext, game }: useControllerProps) => {
   const { snake, tick: snakeTick } = snakeContext;
   const moves = useRef<GameMove[]>([]);
+  const haveMovedThisTick = useRef(false);
 
   const addMove = (move: GameMove) => {
     moves.current.push(move);
   };
 
   useEffect(() => {
+    if (haveMovedThisTick.current) return;
+
     const move = moves.current.pop();
     if (move) {
+      haveMovedThisTick.current = true;
       move();
     }
+  }, [game.tick]);
+
+  useEffect(() => {
+    haveMovedThisTick.current = false;
   }, [snakeTick]);
 
   useEffect(() => {
