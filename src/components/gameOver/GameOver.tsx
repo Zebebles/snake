@@ -10,9 +10,11 @@ import {
   KeyboardReturn,
 } from "@mui/icons-material";
 
-export interface GameOverProps {}
+export interface GameOverProps {
+  title: string;
+}
 
-export const GameOver = (props: GameOverProps): JSX.Element => {
+export const GameOver = ({ title }: GameOverProps): JSX.Element => {
   const { hasStarted } = useGameContext();
 
   return (
@@ -20,7 +22,7 @@ export const GameOver = (props: GameOverProps): JSX.Element => {
       <Grid container>
         <Grid item xs={12} sx={styles.headingContainer}>
           <Typography variant="h2">
-            {hasStarted ? "Game over!" : "Welcome to Snek!"}
+            {hasStarted ? "Game over!" : `Welcome to ${title}`}
           </Typography>
         </Grid>
         <Grid item xs={12}>

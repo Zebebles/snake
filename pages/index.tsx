@@ -11,7 +11,7 @@ const Home: NextPage<{ title: string }> = ({ title }) => {
   return (
     <>
       <Backdrop open={isOver || !hasStarted}>
-        <GameOver />
+        <GameOver title={title} />
       </Backdrop>
       <PageLayout title={title}>
         <Map />
@@ -21,7 +21,7 @@ const Home: NextPage<{ title: string }> = ({ title }) => {
 };
 
 export const getStaticProps = async () => {
-  return { props: { title: "Snek" } };
+  return { props: { title: "Le Snek" } };
 };
 
 export default Home;
