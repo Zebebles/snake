@@ -1,28 +1,44 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { styles } from "./Tile.styles";
-import { useGameContext } from "../useGame/useGame";
-import { Tile as GameTile } from "../../../game/tile/Tile";
+import { Border } from "../../../game/tile/Tile";
 
 export interface TileProps {
-  gameTile: GameTile;
+  hasApple: boolean;
+  hasSnake: boolean;
+  isWall: boolean;
+  snakeImgSrc?: string;
+  border: Border | undefined;
 }
 
-export const Tile = ({ gameTile }: TileProps): JSX.Element => {
-  const { snake: snakeContext } = useGameContext();
-  const { snake } = snakeContext;
+export const Tile = ({
+  hasApple,
+  hasSnake,
+  isWall,
+  snakeImgSrc,
+  border,
+}: TileProps): JSX.Element => {
+  return React.useMemo(
+    () => (
+      <Box
+        sx={styles.tileContainer}
+        className={isWall ? "wall" : ""}
+        style={border}
+      >
+        <img
+          src="/img/apple.png"
+          alt="apple.png"
+          style={{ display: hasApple ? "" : "none" }}
+        />
 
-  const snakeSection = snake.findSection(gameTile.position);
-  return (
-    <Box sx={styles.tileContainer}>
-      {gameTile.hasApple && <img src="/img/apple.png" alt="apple.png" />}
-
-      <img
-        src={snakeSection?.imgSrc}
-        alt="snake part"
-        className="snakePart"
-        style={{ display: snakeSection?.imgSrc ? "" : "none" }}
-      />
-    </Box>
+        <img
+          src={snakeImgSrc}
+          alt="snake part"
+          className="snakePart"
+          style={{ display: hasSnake ? "" : "none" }}
+        />
+      </Box>
+    ),
+    [hasApple, hasSnake, snakeImgSrc]
   );
 };

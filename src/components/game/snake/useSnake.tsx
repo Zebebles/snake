@@ -22,15 +22,34 @@ export const useSnake = (game: useSnakeProps) => {
 
   useEffect(() => {
     if (game.tick % snake.movePerTicks === 0) {
-      snake.move();
       setTick(tick + 1);
     }
   }, [game.tick]);
 
+  // Move the snake
   useEffect(() => {
-    if (snake.head.isAtPosition(game.map.appleTile?.position)) {
+    snake.move();
+  }, [tick]);
+
+  /* Detect snake head / apple intersection */
+  useEffect(() => {
+    if (snake.head.isAtPosition(game.applePosition)) {
       snake.eatApple();
-      game.map.placeApple();
+      game.placeApple();
+    }
+  }, [tick]);
+
+  /* Detect snake + wall or snake + snake intersection */
+  useEffect(() => {
+    if (snake.isDead) return;
+
+    const headPosition = snake.head.tilePosition;
+    if (
+      snake.willIntersect(headPosition) ||
+      game.map.isOutOfBounds(headPosition)
+    ) {
+      snake.isDead = true;
+      return game.setIsOver(true);
     }
   }, [tick]);
 
