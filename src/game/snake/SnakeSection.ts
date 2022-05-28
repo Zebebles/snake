@@ -1,5 +1,5 @@
 import { Direction } from "./Snake";
-import { Position } from "../map/Map";
+import { Position, Map } from "../map/Map";
 
 export interface SnakeSectionConstructorProps {
   entryDirection: Direction;
@@ -12,6 +12,7 @@ export class SnakeSection {
   public entryDirection: Direction;
   public exitDirection: Direction;
   public tilePosition: Position;
+  public offset: { top: number; left: number };
   private _isHead: boolean;
   private _bodyImgSrc: string | undefined;
   private _headImgSrc: string | undefined;
@@ -29,6 +30,8 @@ export class SnakeSection {
     this.tilePosition = tilePosition;
     this._isHead = isHead ?? false;
     this._setImgSrc();
+
+    this.offset = Map.getOffsetPx(tilePosition);
   }
 
   public get isTail(): boolean {
@@ -73,15 +76,30 @@ export class SnakeSection {
   }
 
   /*Add a new section to the snake. Will add to the tail.*/
-  public addSection(newPosition?: Position) {
+  public addSection() {
     if (this._next) {
       this._next.addSection();
     } else {
       this.next = new SnakeSection({
-        tilePosition: newPosition ?? this.tilePosition,
+        tilePosition: this._nextTilePosition,
         entryDirection: this.entryDirection,
         exitDirection: this.exitDirection,
       });
+    }
+  }
+
+  private get _nextTilePosition(): Position {
+    switch (this.exitDirection) {
+      case Direction.UP:
+        return { ...this.tilePosition, x: this.tilePosition.x + 1 };
+      case Direction.DOWN:
+        return { ...this.tilePosition, x: this.tilePosition.x - 1 };
+      case Direction.LEFT:
+        return { ...this.tilePosition, y: this.tilePosition.y + 1 };
+      case Direction.RIGHT:
+        return { ...this.tilePosition, y: this.tilePosition.y - 1 };
+      default:
+        return { ...this.tilePosition };
     }
   }
 

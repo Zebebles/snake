@@ -26,6 +26,7 @@ export const styles: StylesList = {
   },
 
   gameMap: {
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     height: mapSize,
