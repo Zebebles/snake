@@ -14,8 +14,8 @@ export const Tile = ({ hasApple, snakeSection }: TileProps): JSX.Element => {
   return React.useMemo(
     () => (
       <Box sx={styles.tileContainer}>
-        {hasApple && <AppleSection />}
-        {snakeSection && <SnakeSection snakeSection={snakeSection} />}
+        <AppleSection hasApple={hasApple} />
+        <SnakeSection snakeSection={snakeSection} />
       </Box>
     ),
     [hasApple, snakeSection?.isHead, snakeSection?.isTail]

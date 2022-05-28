@@ -8,5 +8,8 @@ export const styles: StylesList = {
       width: TILE_SIZE,
       height: TILE_SIZE,
     },
+    "&.hide > img": {
+      display: "none",
+    },
   },
 };

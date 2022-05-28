@@ -102,8 +102,6 @@ export class Snake {
   }
 
   public move() {
-    if (this.isDead) return;
-
     const newHead = new SnakeSection({
       entryDirection: this.head.exitDirection,
       exitDirection: this.direction,

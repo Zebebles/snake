@@ -5,6 +5,8 @@ import { Snake } from "../../../game/snake/Snake";
 import { Tile } from "../../../game/tile/Tile";
 import useInterval from "use-interval";
 
+export const TICK_RATE_MS = 10;
+
 export type GameContextType = {
   map: Map;
   snake: useSnake;
@@ -60,7 +62,7 @@ export const GameContextProvider = ({
     if (!isOver && hasStarted) {
       setTick(tick + 1);
     }
-  }, 10);
+  }, TICK_RATE_MS);
 
   useEffect(() => {
     if (!isOver) {

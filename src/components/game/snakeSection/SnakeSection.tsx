@@ -4,18 +4,19 @@ import { styles } from "./SnakeSection.styles";
 import { SnakeSection as SnakeGameSection } from "../../../game/snake/SnakeSection";
 
 export interface SnakeSectionProps {
-  snakeSection: SnakeGameSection;
+  snakeSection: SnakeGameSection | undefined;
 }
 
 export const SnakeSection = ({
   snakeSection,
 }: SnakeSectionProps): JSX.Element => {
+  const show = Boolean(snakeSection);
   return React.useMemo(
     () => (
-      <Box sx={styles.snake}>
-        <img src={snakeSection.imgSrc} alt="snake section" />
+      <Box sx={styles.snake} className={show ? "show" : "hide"}>
+        <img src={snakeSection?.imgSrc} alt="snake section" />
       </Box>
     ),
-    [snakeSection.isHead, snakeSection.isTail]
+    [show, snakeSection?.isHead, snakeSection?.isTail]
   );
 };
