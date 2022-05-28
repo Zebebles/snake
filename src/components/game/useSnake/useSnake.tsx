@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Snake } from "../../../game/snake/Snake";
 import { GameContextType } from "../useGame/useGame";
-import { useController } from "../controller/useController";
+import { useController } from "../useController/useController";
 
 export type useSnake = {
   snake: Snake;

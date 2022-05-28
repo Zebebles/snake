@@ -10,7 +10,7 @@ const Home: NextPage<{ title: string }> = ({ title }) => {
 
   return (
     <>
-      <Backdrop open={isOver || !hasStarted}>
+      <Backdrop open={isOver || !hasStarted} style={{ zIndex: 10 }}>
         <GameOver title={title} />
       </Backdrop>
       <PageLayout title={title}>

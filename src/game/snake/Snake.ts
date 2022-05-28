@@ -15,7 +15,7 @@ export class Snake {
     this._map = map;
     this.direction = Direction.RIGHT;
     this.length = 5;
-    this.movePerTicks = 30;
+    this.movePerTicks = 19;
     this.isDead = false;
 
     const headPosition = { x: START_ROW_INDEX, y: START_COL_INDEX };
@@ -50,9 +50,16 @@ export class Snake {
 
   public eatApple() {
     this.grow();
-    if (this.length % 3 === 0 && this.movePerTicks > 10) {
-      this.speedUp();
-    }
+    if (this.movePerTicks > 10) {
+      if (this.length % 2 === 0) {
+        // speed up every second apple if speed > 10
+        this.speedUp();
+      }
+    } else if (this.movePerTicks >= 5)
+      if (this.length % 4 === 0) {
+        // speed up every fourth apple if speed < 10
+        this.speedUp();
+      }
   }
 
   public grow() {
@@ -95,8 +102,6 @@ export class Snake {
   }
 
   public move() {
-    if (this.isDead) return;
-
     const newHead = new SnakeSection({
       entryDirection: this.head.exitDirection,
       exitDirection: this.direction,

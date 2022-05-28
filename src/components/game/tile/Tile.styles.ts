@@ -11,15 +11,5 @@ export const styles: StylesList = {
     width: TILE_SIZE,
     backgroundColor: "#6f886f",
     border: `2px solid rgba(185, 237, 193, .08)`,
-
-    "& > img:not(.snakePart)": {
-      width: TILE_SIZE - 10,
-      height: TILE_SIZE - 10,
-    },
-
-    "& > img.snakePart": {
-      height: TILE_SIZE,
-      width: TILE_SIZE,
-    },
   },
 };

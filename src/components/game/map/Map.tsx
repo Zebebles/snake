@@ -7,26 +7,22 @@ import { styles } from "./Map.styles";
 export interface MapProps {}
 
 export const Map = (): JSX.Element => {
-  const { map, score, applePosition, snake } = useGameContext();
+  const { map, score, applePosition, snake, hasStarted } = useGameContext();
 
   return (
     <Box sx={styles.gameMapWrapper}>
-      <Box sx={styles.scoreWrapper}>
+      <Box sx={styles.scoreWrapper} zIndex={hasStarted ? 11 : 0}>
         <Typography variant={"h2"}>
           <strong>{score}</strong>
         </Typography>
       </Box>
       <Grid container sx={styles.gameMap}>
         {map.tiles.map((tile, i) => {
-          const hasApple = tile.areYou(applePosition);
-          const snakeSection = snake.snake.findSection(tile.position);
-
           return (
             <Tile
               key={i}
-              hasApple={hasApple}
-              hasSnake={Boolean(snakeSection)}
-              snakeImgSrc={snakeSection?.imgSrc}
+              hasApple={tile.areYou(applePosition)}
+              snakeSection={snake.snake.findSection(tile.position)}
             />
           );
         })}
