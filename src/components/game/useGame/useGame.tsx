@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Map, Position } from "../../../game/map/Map";
-import { useSnake } from "../snake/useSnake";
+import { useSnake } from "../useSnake/useSnake";
 import { Snake } from "../../../game/snake/Snake";
 import { Tile } from "../../../game/tile/Tile";
 import useInterval from "use-interval";
@@ -60,7 +60,7 @@ export const GameContextProvider = ({
     if (!isOver && hasStarted) {
       setTick(tick + 1);
     }
-  }, 5);
+  }, 10);
 
   useEffect(() => {
     if (!isOver) {
