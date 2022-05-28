@@ -7,5 +7,8 @@ export const styles: StylesList = {
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
+    "& > h2": {
+      zIndex: 11,
+    },
   },
 };
