@@ -1,12 +1,12 @@
 import { Map, Position } from "../map/Map";
 import { SnakeSection } from "./SnakeSection";
 
-const START_COL_INDEX = 4;
+const START_COL_INDEX = 3;
 const START_ROW_INDEX = 2;
 
 export class Snake {
   private _map: Map;
-  private _headSection: SnakeSection;
+  private readonly _headSection: SnakeSection;
   public isDead: boolean;
   public length: number;
   public movePerTicks: number;
@@ -34,13 +34,6 @@ export class Snake {
 
   public get head(): SnakeSection {
     return this._headSection;
-  }
-
-  public set head(newHead: SnakeSection) {
-    newHead.isHead = true;
-    newHead.next = this.head;
-    this.head.isHead = false;
-    this._headSection = newHead;
   }
 
   public findSection(position?: Position): SnakeSection | undefined {
@@ -74,27 +67,7 @@ export class Snake {
   public changeDirection(newDirection: Direction) {
     if (newDirection !== OppositeDirections[this.direction]) {
       this.direction = newDirection;
-      this.head.exitDirection = newDirection;
     }
-  }
-
-  public get nextPosition(): Position {
-    let newHeadX = this.head.tilePosition.x;
-    let newHeadY = this.head.tilePosition.y;
-    switch (this.direction) {
-      case Direction.UP:
-        newHeadX = newHeadX - 1;
-        break;
-      case Direction.DOWN:
-        newHeadX = newHeadX + 1;
-        break;
-      case Direction.LEFT:
-        newHeadY = newHeadY - 1;
-        break;
-      case Direction.RIGHT:
-        newHeadY = newHeadY + 1;
-    }
-    return { x: newHeadX, y: newHeadY };
   }
 
   public willIntersect(position: Position): boolean {
@@ -102,22 +75,17 @@ export class Snake {
   }
 
   public move() {
-    const newHead = new SnakeSection({
-      entryDirection: this.head.exitDirection,
-      exitDirection: this.direction,
-      tilePosition: this.nextPosition,
-      isHead: true,
-    });
+    this.head.entryDirection = this.direction;
+
+    const nextPosition = this.head.frontTilePosition;
 
     if (
-      this._map.isOutOfBounds(newHead.tilePosition) ||
-      this.willIntersect(newHead.tilePosition)
+      this._map.isOutOfBounds(nextPosition) ||
+      this.willIntersect(nextPosition)
     )
       return (this.isDead = true);
 
-    this.head.moveTail();
-
-    this.head = newHead;
+    this.head.tilePosition = nextPosition;
   }
 }
 
