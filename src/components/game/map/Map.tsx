@@ -7,11 +7,11 @@ import { styles } from "./Map.styles";
 export interface MapProps {}
 
 export const Map = (): JSX.Element => {
-  const { map, score, applePosition, snake } = useGameContext();
+  const { map, score, applePosition, snake, hasStarted } = useGameContext();
 
   return (
     <Box sx={styles.gameMapWrapper}>
-      <Box sx={styles.scoreWrapper}>
+      <Box sx={styles.scoreWrapper} zIndex={hasStarted ? 11 : 0}>
         <Typography variant={"h2"}>
           <strong>{score}</strong>
         </Typography>

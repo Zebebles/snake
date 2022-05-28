@@ -18,7 +18,6 @@ export const styles: StylesList = {
   scoreWrapper: {
     display: "flex",
     alignItems: "center",
-    zIndex: 1,
     "& > * > strong": {
       fontSize: "1.6em",
       fontWeight: "300",
