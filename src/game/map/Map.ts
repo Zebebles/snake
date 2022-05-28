@@ -5,6 +5,7 @@ export const MAP_HEIGHT = parseInt(
 export const MAP_WIDTH = parseInt(
   process.env.NEXT_PUBLIC_GAME_MAP_WIDTH ?? "0"
 );
+import { TILE_SIZE } from "../../components/game/tile/Tile.styles";
 
 export interface Position {
   x: number;
@@ -55,5 +56,13 @@ export class Map {
   public getTile(position: Position): Tile | undefined {
     const index = position.x * position.y;
     return this.tiles[index];
+  }
+
+  public static getOffsetPx(position: Position | undefined): {
+    top: number;
+    left: number;
+  } {
+    if (!position) return { top: 0, left: 0 };
+    return { top: position.x * TILE_SIZE, left: position.y * TILE_SIZE };
   }
 }

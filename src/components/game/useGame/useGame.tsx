@@ -5,7 +5,7 @@ import { Snake } from "../../../game/snake/Snake";
 import { Tile } from "../../../game/tile/Tile";
 import useInterval from "use-interval";
 
-export const TICK_RATE_MS = 10;
+export const TICK_RATE_MS = 20;
 
 export type GameContextType = {
   map: Map;
