@@ -1,6 +1,7 @@
 import { Map, Position } from "../map/Map";
 import { SnakeSection } from "./SnakeSection";
-const START_COL_INDEX = 5;
+
+const START_COL_INDEX = 4;
 const START_ROW_INDEX = 2;
 
 export class Snake {
@@ -15,7 +16,7 @@ export class Snake {
     this._map = map;
     this.direction = Direction.RIGHT;
     this.length = 5;
-    this.movePerTicks = 19;
+    this.movePerTicks = 12;
     this.isDead = false;
 
     const headPosition = { x: START_ROW_INDEX, y: START_COL_INDEX };
@@ -27,8 +28,7 @@ export class Snake {
     });
 
     for (let i = 1; i < this.length; i++) {
-      const tilePosition = { x: headPosition.x, y: headPosition.y - i };
-      this.head.addSection(tilePosition);
+      this.head.addSection();
     }
   }
 
@@ -50,7 +50,7 @@ export class Snake {
 
   public eatApple() {
     this.grow();
-    if (this.movePerTicks > 10) {
+    if (this.movePerTicks > 7) {
       if (this.length % 2 === 0) {
         // speed up every second apple if speed > 10
         this.speedUp();
