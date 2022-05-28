@@ -10,13 +10,12 @@ export interface SnakeSectionProps {
 export const SnakeSection = ({
   snakeSection,
 }: SnakeSectionProps): JSX.Element => {
-  const show = Boolean(snakeSection);
   return React.useMemo(
     () => (
-      <Box sx={styles.snake} className={show ? "show" : "hide"}>
+      <Box sx={styles.snake}>
         <img src={snakeSection?.imgSrc} alt="snake section" />
       </Box>
     ),
-    [show, snakeSection?.isHead, snakeSection?.isTail]
+    [snakeSection?.isHead, snakeSection?.isTail]
   );
 };

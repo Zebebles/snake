@@ -15,7 +15,7 @@ export class Snake {
     this._map = map;
     this.direction = Direction.RIGHT;
     this.length = 5;
-    this.movePerTicks = 17;
+    this.movePerTicks = 19;
     this.isDead = false;
 
     const headPosition = { x: START_ROW_INDEX, y: START_COL_INDEX };
