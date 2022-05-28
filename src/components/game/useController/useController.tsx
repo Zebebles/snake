@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Direction } from "../../../game/snake/Snake";
 import { GameContextType } from "../useGame/useGame";
-import { useSnake } from "../snake/useSnake";
+import { useSnake } from "../useSnake/useSnake";
 
 export type useController = {};
 

@@ -18,15 +18,11 @@ export const Map = (): JSX.Element => {
       </Box>
       <Grid container sx={styles.gameMap}>
         {map.tiles.map((tile, i) => {
-          const hasApple = tile.areYou(applePosition);
-          const snakeSection = snake.snake.findSection(tile.position);
-
           return (
             <Tile
               key={i}
-              hasApple={hasApple}
-              hasSnake={Boolean(snakeSection)}
-              snakeImgSrc={snakeSection?.imgSrc}
+              hasApple={tile.areYou(applePosition)}
+              snakeSection={snake.snake.findSection(tile.position)}
             />
           );
         })}
