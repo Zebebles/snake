@@ -22,7 +22,10 @@ export const useSnake = (game: useSnakeProps) => {
 
   useEffect(() => {
     if (game.tick % snake.movePerTicks === 0) {
-      setTick(tick + 1);
+      if (!snake.isDead) {
+        snake.move();
+        setTick(tick + 1);
+      }
     }
   }, [game.tick]);
 
@@ -33,13 +36,6 @@ export const useSnake = (game: useSnakeProps) => {
       game.placeApple();
     }
   }, [game.tick]);
-
-  /* Move the snake + detect game ending collisions */
-  useEffect(() => {
-    if (!snake.isDead) {
-      snake.move();
-    }
-  }, [tick]);
 
   return snakeContext;
 };

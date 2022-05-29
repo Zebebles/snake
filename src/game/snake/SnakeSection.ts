@@ -9,8 +9,9 @@ export interface SnakeSectionConstructorProps {
 }
 
 export class SnakeSection {
-  public entryDirection: Direction;
-  public exitDirection: Direction;
+  private _entryDirection: Direction;
+  private _exitDirection: Direction;
+  public imgSrc: string;
   private _tilePosition: Position;
   public readonly isHead: boolean;
   public next: SnakeSection | undefined;
@@ -21,10 +22,12 @@ export class SnakeSection {
     tilePosition,
     isHead,
   }: SnakeSectionConstructorProps) {
-    this.entryDirection = entryDirection;
-    this.exitDirection = exitDirection;
+    this._entryDirection = entryDirection;
+    this._exitDirection = exitDirection;
     this._tilePosition = tilePosition;
     this.isHead = isHead ?? false;
+    this.imgSrc = "";
+    this._setImgSrc();
   }
 
   public get tilePosition() {
@@ -42,6 +45,24 @@ export class SnakeSection {
     this._tilePosition = newPosition;
   }
 
+  public get entryDirection() {
+    return this._entryDirection;
+  }
+
+  public set entryDirection(newDirection: Direction) {
+    this._entryDirection = newDirection;
+    this._setImgSrc();
+  }
+
+  public get exitDirection() {
+    return this._exitDirection;
+  }
+
+  public set exitDirection(newDirection: Direction) {
+    this._exitDirection = newDirection;
+    this._setImgSrc();
+  }
+
   public get isTail(): boolean {
     return !Boolean(this.next);
   }
@@ -52,13 +73,15 @@ export class SnakeSection {
 
   /*Add a new section to the snake. Will add to the tail.*/
   public addSection() {
-    if (!this.next)
+    if (!this.next) {
       this.next = new SnakeSection({
-        tilePosition: this.backTilePosition,
+        tilePosition: this.tilePosition,
         entryDirection: this.entryDirection,
         exitDirection: this.exitDirection,
       });
-    else this.next.addSection();
+    } else {
+      this.next.addSection();
+    }
   }
 
   public isAtPosition(tilePosition?: Position): boolean {
@@ -76,21 +99,21 @@ export class SnakeSection {
     return this.next?.find(tilePosition);
   }
 
-  public get imgSrc(): string {
+  private _setImgSrc() {
     if (this.isHead)
-      return `/img/snake/head_${this.entryDirection.toLowerCase()}.png`;
+      return (this.imgSrc = `/img/snake/head_${this._entryDirection.toLowerCase()}.png`);
     if (this.isTail)
-      return `/img/snake/tail_${this.entryDirection.toLowerCase()}.png`;
+      return (this.imgSrc = `/img/snake/tail_${this._entryDirection.toLowerCase()}.png`);
 
-    if (this.entryDirection === this.exitDirection) {
+    if (this._entryDirection === this._exitDirection) {
       const direction =
-        this.entryDirection === Direction.UP ||
-        this.entryDirection === Direction.DOWN
+        this._entryDirection === Direction.UP ||
+        this._entryDirection === Direction.DOWN
           ? "vertical"
           : "horizontal";
-      return `/img/snake/body_${direction}.png`;
+      return (this.imgSrc = `/img/snake/body_${direction}.png`);
     } else {
-      return `/img/snake/corner_${this.exitDirection.toLowerCase()}_${this.entryDirection.toLowerCase()}.png`;
+      return (this.imgSrc = `/img/snake/corner_${this._exitDirection.toLowerCase()}_${this._entryDirection.toLowerCase()}.png`);
     }
   }
 
@@ -104,21 +127,6 @@ export class SnakeSection {
         return { ...this.tilePosition, y: this.tilePosition.y - 1 };
       case Direction.RIGHT:
         return { ...this.tilePosition, y: this.tilePosition.y + 1 };
-      default:
-        return { ...this.tilePosition };
-    }
-  }
-
-  public get backTilePosition(): Position {
-    switch (this.entryDirection) {
-      case Direction.UP:
-        return { ...this.tilePosition, x: this.tilePosition.x + 1 };
-      case Direction.DOWN:
-        return { ...this.tilePosition, x: this.tilePosition.x - 1 };
-      case Direction.LEFT:
-        return { ...this.tilePosition, y: this.tilePosition.y + 1 };
-      case Direction.RIGHT:
-        return { ...this.tilePosition, y: this.tilePosition.y - 1 };
       default:
         return { ...this.tilePosition };
     }

@@ -1,7 +1,7 @@
 import { Map, Position } from "../map/Map";
 import { SnakeSection } from "./SnakeSection";
 
-const START_COL_INDEX = 4;
+const START_COL_INDEX = 1;
 const START_ROW_INDEX = 2;
 
 export class Snake {
@@ -29,6 +29,7 @@ export class Snake {
 
     for (let i = 1; i < this.length; i++) {
       this.head.addSection();
+      this.move();
     }
   }
 
@@ -67,6 +68,7 @@ export class Snake {
   public changeDirection(newDirection: Direction) {
     if (newDirection !== OppositeDirections[this.direction]) {
       this.direction = newDirection;
+      this.head.entryDirection = newDirection;
     }
   }
 
@@ -75,8 +77,6 @@ export class Snake {
   }
 
   public move() {
-    this.head.entryDirection = this.direction;
-
     const nextPosition = this.head.frontTilePosition;
 
     if (
