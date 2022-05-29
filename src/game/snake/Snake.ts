@@ -1,7 +1,7 @@
 import { Map, Position } from "../map/Map";
 import { SnakeSection } from "./SnakeSection";
 
-const START_COL_INDEX = 3;
+const START_COL_INDEX = 4;
 const START_ROW_INDEX = 2;
 
 export class Snake {

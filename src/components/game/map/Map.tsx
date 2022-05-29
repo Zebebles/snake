@@ -4,28 +4,34 @@ import { useGameContext } from "../useGame/useGame";
 import { Tile } from "../tile/Tile";
 import { styles } from "./Map.styles";
 import { AppleComponent } from "../apple/Apple";
-import { SnakeComponent } from "../snake/Snake";
-
-export interface MapProps {}
+import { SnakeSectionComponent } from "../snake/SnakeSection";
 
 export const Map = (): JSX.Element => {
-  const { map, score, hasStarted, applePosition, snake } = useGameContext();
+  const { map, score, hasStarted, applePosition, snake, tick } =
+    useGameContext();
   const tiles = map.tiles.map((tile, i) => <Tile key={i} />);
 
-  return (
-    <Box sx={styles.gameMapWrapper}>
-      <Box sx={styles.scoreWrapper} zIndex={hasStarted ? 11 : 0}>
-        <Typography variant={"h2"}>
-          <strong>{score}</strong>
-        </Typography>
+  return React.useMemo(
+    () => (
+      <Box sx={styles.gameMapWrapper}>
+        <Box sx={styles.scoreWrapper} zIndex={hasStarted ? 11 : 0}>
+          <Typography variant={"h2"}>
+            <strong>{score}</strong>
+          </Typography>
+        </Box>
+        <Grid container sx={styles.gameMap}>
+          <>
+            <AppleComponent applePosition={applePosition} />
+            <SnakeSectionComponent
+              section={snake.snake.head}
+              key={0}
+              index={0}
+            />
+            {tiles}
+          </>
+        </Grid>
       </Box>
-      <Grid container sx={styles.gameMap}>
-        <>
-          <AppleComponent applePosition={applePosition} />
-          <SnakeComponent snake={snake.snake} />
-          {tiles}
-        </>
-      </Grid>
-    </Box>
+    ),
+    [tick]
   );
 };
