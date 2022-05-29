@@ -4,15 +4,26 @@ import { styles } from "./SnakeSection.styles";
 import { SnakeSection } from "../../../game/snake/SnakeSection";
 
 export interface SnakeSectionComponentProps {
-  snakeSection: SnakeSection;
+  section: SnakeSection;
+  index: number;
 }
 
 export const SnakeSectionComponent = ({
-  snakeSection,
+  section,
+  index,
 }: SnakeSectionComponentProps): JSX.Element => {
   return (
-    <Box sx={styles.snakeSection} style={{ ...snakeSection.offset }}>
-      <img src={snakeSection.imgSrc} alt="snake section" />
-    </Box>
+    <>
+      <Box sx={styles.snakeSection} style={{ ...section.offset }}>
+        <img src={section.imgSrc} alt="snake section" />
+      </Box>
+      {section.next && (
+        <SnakeSectionComponent
+          section={section.next}
+          index={index + 1}
+          key={index + 1}
+        />
+      )}
+    </>
   );
 };
