@@ -7,8 +7,7 @@ import { AppleComponent } from "../apple/Apple";
 import { SnakeSectionComponent } from "../snake/SnakeSection";
 
 export const Map = (): JSX.Element => {
-  const { map, score, hasStarted, applePosition, snake, tick } =
-    useGameContext();
+  const { map, score, hasStarted, applePosition, snake } = useGameContext();
   const tiles = map.tiles.map((tile, i) => <Tile key={i} />);
 
   return React.useMemo(
@@ -32,6 +31,6 @@ export const Map = (): JSX.Element => {
         </Grid>
       </Box>
     ),
-    [tick]
+    [snake.snake.head.tilePosition]
   );
 };
